@@ -21,6 +21,8 @@
   },
   "dependencies": {
     "ably": "^1.2.29",
-    "dotenv": "^16.0.1"
+    "dotenv": "^16.0.1",
+    "socket.io": "^4.6.2",
+    "socket.io-client": "^4.6.2"
   }
 }

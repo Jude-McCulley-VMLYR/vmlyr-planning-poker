@@ -28,3 +28,35 @@ export async function handler(event: HandlerEvent, context: HandlerContext) {
   };
 
 }
+
+const express = require('express');
+const app = express();
+const http = require('http');
+const server = http.createServer(app);
+const { Server } = require("socket.io");
+const io = new Server(server);
+var votes = [];
+
+app.get('/', (req, res) => {
+  res.sendFile(__dirname + '/index.html');
+});
+
+io.on('connection', (socket) => {
+    socket.on('chat message', (msg) => {
+      io.emit('chat message', msg);
+    });
+    socket.on('vote message', (msg) => {
+      votes.push(msg);
+      io.emit('vote message', msg);
+    });
+    socket.on('show votes', (msg) => {
+      io.emit('show votes', votes);
+      votes = [];
+    });
+});
+
+
+// server.listen(3000, () => {
+//   console.log('listening on *:3000');
+// });
+
